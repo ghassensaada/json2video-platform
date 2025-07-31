@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   // Set up axios defaults
   useEffect(() => {
+    console.log('Setting up axios with baseURL:', axios.defaults.baseURL);
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
@@ -48,21 +49,41 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (email, password) => {
-    try {
-      const response = await axios.post('/api/auth/login', { email, password });
-      const { token: newToken, user: userData } = response.data;
-      
-      localStorage.setItem('token', newToken);
-      setToken(newToken);
-      setUser(userData);
-      
-      toast.success('Login successful!');
-      return { success: true };
-    } catch (error) {
-      const message = error.response?.data?.error || 'Login failed';
-      toast.error(message);
-      return { success: false, error: message };
+    const maxRetries = 2;
+    let lastError;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`Login attempt ${attempt} with baseURL:`, axios.defaults.baseURL);
+        const response = await axios.post('/api/auth/login', { email, password });
+        const { token: newToken, user: userData } = response.data;
+        
+        localStorage.setItem('token', newToken);
+        setToken(newToken);
+        setUser(userData);
+        
+        toast.success('Login successful!');
+        return { success: true };
+      } catch (error) {
+        lastError = error;
+        console.error(`Login attempt ${attempt} failed:`, {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status,
+          baseURL: axios.defaults.baseURL
+        });
+        
+        // If it's a network error and not the last attempt, wait a bit and retry
+        if (attempt < maxRetries && (error.code === 'ECONNABORTED' || error.message.includes('Network Error'))) {
+          await new Promise(resolve => setTimeout(resolve, 500));
+          continue;
+        }
+      }
     }
+
+    const message = lastError.response?.data?.error || lastError.message || 'Login failed';
+    toast.error(message);
+    return { success: false, error: message };
   };
 
   const register = async (name, email, password) => {
