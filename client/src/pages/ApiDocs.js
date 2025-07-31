@@ -16,6 +16,12 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import axios from 'axios';
+
+// Determine API base URL for display purposes in docs.
+// Uses the same resolution logic as AuthContext (axios.defaults.baseURL already set).
+// Fallback to window origin or http://localhost:5000 in dev.
+const BASE_URL = `${axios.defaults?.baseURL || ''}/api`;
 
 const ApiDocs = () => {
   const { isAuthenticated, authLoading } = useAuth();
@@ -166,9 +172,9 @@ const ApiDocs = () => {
             <div className="card-content">
               <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                 <div className="flex items-center justify-between">
-                  <span>http://localhost:5001/api</span>
+                  <span>{BASE_URL}</span>
                   <button
-                    onClick={() => copyToClipboard('http://localhost:5001/api')}
+                    onClick={() => copyToClipboard(BASE_URL)}
                     className="text-gray-400 hover:text-white"
                   >
                     <Copy className="w-4 h-4" />
@@ -241,7 +247,7 @@ const ApiDocs = () => {
                   <h4 className="font-semibold text-gray-900 mb-2">Example Request</h4>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X GET http://srv835422.hstgr.cloud/json2video/api/templates \\
+{`curl -X GET ${BASE_URL}/templates \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json"`}
                     </pre>
@@ -285,7 +291,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Retrieve all templates</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X GET http://srv835422.hstgr.cloud/json2video/api/templates \\
+{`curl -X GET ${BASE_URL}/templates \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -300,7 +306,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Create a new template</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X POST http://srv835422.hstgr.cloud/json2video/api/templates \\
+{`curl -X POST ${BASE_URL}/templates \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -327,7 +333,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Update a template</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X PUT http://srv835422.hstgr.cloud/json2video/api/templates/123 \\
+{`curl -X PUT ${BASE_URL}/templates/123 \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -353,7 +359,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Delete a template</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X DELETE http://srv835422.hstgr.cloud/json2video/api/templates/123 \\
+{`curl -X DELETE ${BASE_URL}/templates/123 \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -368,7 +374,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Duplicate a template</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X POST http://srv835422.hstgr.cloud/json2video/api/templates/123/duplicate \\
+{`curl -X POST ${BASE_URL}/templates/123/duplicate \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -387,7 +393,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Retrieve a specific template</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X GET http://srv835422.hstgr.cloud/json2video/api/templates/123 \\
+{`curl -X GET ${BASE_URL}/templates/123 \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -430,7 +436,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Create a new video render</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X POST http://srv835422.hstgr.cloud/json2video/api/renders \\
+{`curl -X POST ${BASE_URL}/renders \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -454,7 +460,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">List all renders</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X GET http://srv835422.hstgr.cloud/json2video/api/renders \\
+{`curl -X GET ${BASE_URL}/renders \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -469,7 +475,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Get render status and details</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X GET http://srv835422.hstgr.cloud/json2video/api/renders/456 \\
+{`curl -X GET ${BASE_URL}/renders/456 \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -484,7 +490,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Delete a render</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X DELETE http://srv835422.hstgr.cloud/json2video/api/renders/456 \\
+{`curl -X DELETE ${BASE_URL}/renders/456 \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -499,7 +505,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Retry a failed render</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X POST http://srv835422.hstgr.cloud/json2video/api/renders/456/retry \\
+{`curl -X POST ${BASE_URL}/renders/456/retry \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -514,7 +520,7 @@ const ApiDocs = () => {
                   <p className="text-gray-600 mb-3">Get render statistics</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X GET http://srv835422.hstgr.cloud/json2video/api/renders/stats/summary \\
+{`curl -X GET ${BASE_URL}/renders/stats/summary \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -663,7 +669,7 @@ create_render()`}
                   <p className="text-gray-600 mb-3">List all API keys</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X GET http://srv835422.hstgr.cloud/json2video/api/apikeys \\
+{`curl -X GET ${BASE_URL}/apikeys \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -678,7 +684,7 @@ create_render()`}
                   <p className="text-gray-600 mb-3">Generate a new API key</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X POST http://srv835422.hstgr.cloud/json2video/api/apikeys \\
+{`curl -X POST ${BASE_URL}/apikeys \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -697,7 +703,7 @@ create_render()`}
                   <p className="text-gray-600 mb-3">Delete an API key</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X DELETE http://srv835422.hstgr.cloud/json2video/api/apikeys/123 \\
+{`curl -X DELETE ${BASE_URL}/apikeys/123 \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -712,7 +718,7 @@ create_render()`}
                   <p className="text-gray-600 mb-3">Activate/deactivate an API key</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X PUT http://srv835422.hstgr.cloud/json2video/api/apikeys/123/toggle \\
+{`curl -X PUT ${BASE_URL}/apikeys/123/toggle \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -727,7 +733,7 @@ create_render()`}
                   <p className="text-gray-600 mb-3">Regenerate an API key</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X POST http://srv835422.hstgr.cloud/json2video/api/apikeys/123/regenerate \\
+{`curl -X POST ${BASE_URL}/apikeys/123/regenerate \\
   -H "Authorization: Bearer YOUR_API_KEY"`}
                     </pre>
                   </div>
@@ -742,7 +748,7 @@ create_render()`}
                   <p className="text-gray-600 mb-3">Create render using API key (External API)</p>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                     <pre className="whitespace-pre-wrap">
-{`curl -X POST http://srv835422.hstgr.cloud/json2video/api/apikeys/render \\
+{`curl -X POST ${BASE_URL}/apikeys/render \\
   -H "X-API-Key: YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{

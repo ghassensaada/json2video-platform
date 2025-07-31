@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Eye, EyeOff, Video, Lock, Mail, User, Sparkles, Zap, Shield } from 'lucide-react';
+import axios from 'axios'; // Added axios import
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -228,7 +229,7 @@ const Login = () => {
             onClick={async () => {
               console.log('Testing direct API call...');
               try {
-                const response = await fetch('http://localhost:5001/api/auth/login', {
+                const response = await fetch(`${axios.defaults?.baseURL || ''}/api/auth/login`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ email: 'admin@json2video.com', password: 'admin123' })
