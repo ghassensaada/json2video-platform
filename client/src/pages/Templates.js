@@ -13,6 +13,7 @@ import {
   Search,
   MoreVertical,
   LogIn,
+  Upload,
 } from 'lucide-react';
 
 const Templates = () => {
@@ -22,6 +23,7 @@ const Templates = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const { isAuthenticated, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const fileInputRef = React.useRef(null);
 
   const fetchTemplates = useCallback(async () => {
     try {
@@ -84,6 +86,47 @@ const Templates = () => {
       } else {
       toast.error('Failed to duplicate template');
       }
+    }
+  };
+
+  const handleImportClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null; // reset so the same file can be selected twice
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.name.endsWith('.json')) {
+      toast.error('Please select a JSON file');
+      return;
+    }
+
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+
+      // Determine payload structure
+      const payload = {
+        name: data.name || file.name.replace(/\.json$/i, ''),
+        description: data.description || '',
+        template_data: data.template_data || data
+      };
+
+      // Basic validation
+      if (!payload.template_data || !payload.template_data.scenes) {
+        throw new Error('Invalid template structure');
+      }
+
+      const response = await axios.post('/api/templates', payload);
+      toast.success('Template imported successfully');
+      navigate(`/templates/${response.data.template.id}`);
+    } catch (err) {
+      console.error('Import template error:', err);
+      toast.error('Failed to import template');
     }
   };
 
@@ -223,6 +266,20 @@ const Templates = () => {
           <Plus className="w-4 h-4 mr-3" />
           New Template
         </Link>
+        <button
+          onClick={handleImportClick}
+          className="btn btn-secondary px-8 py-4 ml-3"
+        >
+          <Upload className="w-4 h-4 mr-3" />
+          Import JSON
+        </button>
+        <input
+          type="file"
+          accept="application/json"
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          className="hidden"
+        />
       </div>
 
       {/* Search and Filter */}
