@@ -2,8 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-// Configure axios base URL - use relative path for same-origin requests
-axios.defaults.baseURL = '/json2video';
+// Configure axios base URL - point to backend API
+axios.defaults.baseURL = 'http://localhost:5001';
 
 const AuthContext = createContext();
 

@@ -166,9 +166,9 @@ const ApiDocs = () => {
             <div className="card-content">
               <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                 <div className="flex items-center justify-between">
-                  <span>http://srv835422.hstgr.cloud/json2video/api</span>
+                  <span>http://localhost:5001/api</span>
                   <button
-                    onClick={() => copyToClipboard('http://srv835422.hstgr.cloud/json2video/api')}
+                    onClick={() => copyToClipboard('http://localhost:5001/api')}
                     className="text-gray-400 hover:text-white"
                   >
                     <Copy className="w-4 h-4" />
@@ -556,7 +556,7 @@ const ApiDocs = () => {
 {`const axios = require('axios');
 
 const API_KEY = 'your_api_key_here';
-const BASE_URL = 'http://srv835422.hstgr.cloud/json2video/api';
+const BASE_URL = 'http://localhost:5001/api';
 
 // Create a render
 async function createRender() {
@@ -595,7 +595,7 @@ createRender();`}
 {`import requests
 
 API_KEY = 'your_api_key_here'
-BASE_URL = 'http://srv835422.hstgr.cloud/json2video/api'
+BASE_URL = 'http://localhost:5001/api'
 
 def create_render():
     headers = {
