@@ -2,8 +2,26 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-// Configure axios base URL - point to backend API
-axios.defaults.baseURL = 'http://localhost:5001';
+// Configure axios base URL dynamically based on environment.
+// 1. If REACT_APP_API_BASE_URL is provided, use it.
+// 2. Otherwise, if running on localhost, default to http://localhost:5000 (matching default server port).
+// 3. In production, use the current origin so that relative API paths work behind reverse proxies.
+
+const getDefaultApiBaseUrl = () => {
+  if (process.env.REACT_APP_API_BASE_URL && process.env.REACT_APP_API_BASE_URL.trim() !== '') {
+    return process.env.REACT_APP_API_BASE_URL.trim();
+  }
+
+  // When served from the same host/port (e.g., in production behind Nginx), we can use a relative path.
+  if (typeof window !== 'undefined' && window.location && window.location.hostname !== 'localhost') {
+    return '';
+  }
+
+  // Development fallback
+  return 'http://localhost:5000';
+};
+
+axios.defaults.baseURL = getDefaultApiBaseUrl();
 axios.defaults.timeout = 10000; // 10 second timeout
 axios.defaults.withCredentials = false; // Disable credentials for CORS
 
@@ -60,7 +78,7 @@ export const AuthProvider = ({ children }) => {
         
         // Create a fresh axios instance for this request to avoid any cached issues
         const loginAxios = axios.create({
-          baseURL: 'http://localhost:5001',
+          baseURL: axios.defaults.baseURL,
           timeout: 10000,
           headers: {
             'Content-Type': 'application/json',
