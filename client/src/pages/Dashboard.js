@@ -131,7 +131,7 @@ const Dashboard = () => {
         <div className="flex items-center justify-between pt-4">
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-purple-800 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold heading-gradient">
                 Dashboard
               </h1>
               <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center animate-float">
@@ -225,7 +225,7 @@ const Dashboard = () => {
       <div className="flex items-center justify-between pt-4 flex-shrink-0">
         <div className="space-y-3">
           <div className="flex items-center space-x-3">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-purple-800 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold heading-gradient">
               Dashboard
             </h1>
             <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center animate-float">

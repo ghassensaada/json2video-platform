@@ -48,7 +48,8 @@
   }
   
   .btn-primary {
-    @apply bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 active:from-indigo-800 active:to-purple-800 focus-visible:ring-indigo-500 shadow-lg hover:shadow-xl;
+    /* Vibrant pink-to-fuchsia gradient */
+    @apply bg-gradient-to-r from-rose-500 to-fuchsia-600 text-white hover:from-rose-600 hover:to-fuchsia-700 active:from-rose-700 active:to-fuchsia-800 focus-visible:ring-rose-500 shadow-lg hover:shadow-xl;
   }
   
   .btn-secondary {
@@ -57,6 +58,29 @@
   
   .btn-outline {
     @apply border-2 border-gray-300 bg-white/80 backdrop-blur-sm hover:bg-white hover:border-indigo-400 active:bg-gray-50 focus-visible:ring-indigo-500 shadow-md hover:shadow-lg;
+  }
+
+  /* Additional button color variants */
+  .btn-success {
+    @apply bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700 active:from-emerald-700 active:to-teal-800 focus-visible:ring-emerald-500 shadow-lg hover:shadow-xl;
+  }
+
+  .btn-warning {
+    @apply bg-gradient-to-r from-amber-400 to-orange-500 text-white hover:from-amber-500 hover:to-orange-600 active:from-amber-600 active:to-orange-700 focus-visible:ring-amber-500 shadow-lg hover:shadow-xl;
+  }
+
+  .btn-danger {
+    @apply bg-gradient-to-r from-red-500 to-rose-600 text-white hover:from-red-600 hover:to-rose-700 active:from-red-700 active:to-rose-800 focus-visible:ring-red-500 shadow-lg hover:shadow-xl;
+  }
+
+  .btn-info {
+    @apply bg-gradient-to-r from-sky-500 to-indigo-500 text-white hover:from-sky-600 hover:to-indigo-600 active:from-sky-700 active:to-indigo-700 focus-visible:ring-sky-500 shadow-lg hover:shadow-xl;
+  }
+
+  /* Animated gradient button variant */
+  .btn-animated {
+    @apply bg-[length:200%_200%] bg-gradient-to-r from-rose-500 via-fuchsia-500 to-purple-600 text-white shadow-lg hover:shadow-2xl transition-all duration-500;
+    animation: gradientShift 8s ease infinite;
   }
   
   .btn-sm {
@@ -158,7 +182,7 @@
   }
 
   .sidebar-nav-item.active {
-    @apply bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg;
+    @apply bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg;
   }
 
   .sidebar-nav-item:not(.active) {
@@ -423,4 +447,9 @@
 
 .leading-relaxed {
   line-height: 1.75;
+} 
+
+/* Unified heading gradient for page titles */
+.heading-gradient {
+  @apply bg-gradient-to-r from-rose-600 via-pink-500 to-fuchsia-600 bg-clip-text text-transparent;
 } 
