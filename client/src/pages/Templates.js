@@ -121,7 +121,7 @@ const Templates = () => {
         <div className="flex items-center justify-between pt-4">
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-purple-800 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold heading-gradient">
                 Templates
               </h1>
               <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">

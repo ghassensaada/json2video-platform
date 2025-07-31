@@ -48,7 +48,8 @@
   }
   
   .btn-primary {
-    @apply bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 active:from-indigo-800 active:to-purple-800 focus-visible:ring-indigo-500 shadow-lg hover:shadow-xl;
+    /* Vibrant pink-to-fuchsia gradient */
+    @apply bg-gradient-to-r from-rose-500 to-fuchsia-600 text-white hover:from-rose-600 hover:to-fuchsia-700 active:from-rose-700 active:to-fuchsia-800 focus-visible:ring-rose-500 shadow-lg hover:shadow-xl;
   }
   
   .btn-secondary {
@@ -158,7 +159,7 @@
   }
 
   .sidebar-nav-item.active {
-    @apply bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg;
+    @apply bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg;
   }
 
   .sidebar-nav-item:not(.active) {
@@ -423,4 +424,9 @@
 
 .leading-relaxed {
   line-height: 1.75;
+} 
+
+/* Unified heading gradient for page titles */
+.heading-gradient {
+  @apply bg-gradient-to-r from-rose-600 via-pink-500 to-fuchsia-600 bg-clip-text text-transparent;
 } 
