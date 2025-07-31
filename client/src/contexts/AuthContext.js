@@ -4,6 +4,8 @@ import toast from 'react-hot-toast';
 
 // Configure axios base URL - point to backend API
 axios.defaults.baseURL = 'http://localhost:5001';
+axios.defaults.timeout = 10000; // 10 second timeout
+axios.defaults.withCredentials = false; // Disable credentials for CORS
 
 const AuthContext = createContext();
 
@@ -55,7 +57,17 @@ export const AuthProvider = ({ children }) => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         console.log(`Login attempt ${attempt} with baseURL:`, axios.defaults.baseURL);
-        const response = await axios.post('/api/auth/login', { email, password });
+        
+        // Create a fresh axios instance for this request to avoid any cached issues
+        const loginAxios = axios.create({
+          baseURL: 'http://localhost:5001',
+          timeout: 10000,
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        
+        const response = await loginAxios.post('/api/auth/login', { email, password });
         const { token: newToken, user: userData } = response.data;
         
         localStorage.setItem('token', newToken);
@@ -75,7 +87,7 @@ export const AuthProvider = ({ children }) => {
         
         // If it's a network error and not the last attempt, wait a bit and retry
         if (attempt < maxRetries && (error.code === 'ECONNABORTED' || error.message.includes('Network Error'))) {
-          await new Promise(resolve => setTimeout(resolve, 500));
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Increased delay
           continue;
         }
       }

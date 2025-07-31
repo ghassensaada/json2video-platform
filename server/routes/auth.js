@@ -49,10 +49,18 @@ router.post('/register', async (req, res) => {
 
 // Login user
 router.post('/login', async (req, res) => {
+  console.log('Login request received:', { 
+    email: req.body.email, 
+    hasPassword: !!req.body.password,
+    timestamp: new Date().toISOString(),
+    userAgent: req.get('User-Agent')
+  });
+  
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
+      console.log('Login failed: Missing email or password');
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
@@ -70,6 +78,12 @@ router.post('/login', async (req, res) => {
 
     // Generate token
     const token = generateToken(user.id);
+
+    console.log('Login successful:', { 
+      userId: user.id, 
+      email: user.email,
+      timestamp: new Date().toISOString()
+    });
 
     res.json({
       message: 'Login successful',
