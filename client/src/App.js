@@ -18,7 +18,7 @@ import './index.css';
 function App() {
   return (
     <AuthProvider>
-      <Router basename="/json2video">
+      <Router>
         <div className="App">
           <Toaster
             position="top-right"
