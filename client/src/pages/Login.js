@@ -224,6 +224,29 @@ const Login = () => {
           <p className="text-xs text-gray-500">
             admin@json2video.com / admin123
           </p>
+          <button
+            onClick={async () => {
+              console.log('Testing direct API call...');
+              try {
+                const response = await fetch('http://localhost:5001/api/auth/login', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email: 'admin@json2video.com', password: 'admin123' })
+                });
+                const data = await response.json();
+                console.log('Direct API response:', data);
+                if (data.token) {
+                  alert('Direct API call successful!');
+                }
+              } catch (error) {
+                console.error('Direct API call failed:', error);
+                alert('Direct API call failed: ' + error.message);
+              }
+            }}
+            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
+          >
+            Test Direct API Call
+          </button>
         </div>
 
         {/* Feature highlights */}
